@@ -1,0 +1,1 @@
+Hi, {{firstName}}, we have not heard form you for a while. Please email {{user_id.email}} to continue your application.

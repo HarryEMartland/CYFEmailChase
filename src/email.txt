@@ -1,0 +1,15 @@
+Hi, {{firstName}},
+
+How is your motivation letter coming along?
+
+We understand that you may have other commitments and may not have time to complete your application at this time.
+If there is anything we can do to help you with your application please respond to this email or get in touch with the community on https://gitter.im/CodeYourFuture-all/Applicants
+
+We will be taking another intake in the not too distant future so if you would rather postpone your application please get in touch.
+
+Regards,
+CYF Team
+
+--
+
+http://codeyourfuture.io">codeyourfuture.io - Follow us on https://www.facebook.com/codeyourfuture.io/ and https://twitter.com/CodeYourFuture_
