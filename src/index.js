@@ -43,7 +43,8 @@ function findRottenDeals() {
             return value.json()
         })
         .then(function (value) {
-            return value.data.filter(deal => moment().isAfter(moment(deal.rotten_time)));
+            var deals = value.data || [];
+            return deals.filter(deal => moment().isAfter(moment(deal.rotten_time)));
         });
 }
 
