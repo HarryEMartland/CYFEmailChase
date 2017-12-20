@@ -8,7 +8,6 @@ const pipedriveKey = process.env.PIPEDRIVE_KEY;
 const pipedriveBaseUrl = 'https://api.pipedrive.com/v1/';
 const pipedriveStage = '20';
 const pipedriveUser = '2643534';
-const fromEmail = 'harry@codeyourfuture.io';
 
 const emailHtmlTemplate = Handlebars.compile(fs.readFileSync('src/email.html', 'utf8'));
 const emailTxtTemplate = Handlebars.compile(fs.readFileSync('src/email.txt', 'utf8'));
@@ -105,7 +104,7 @@ function sendEmail(deal) {
                 Data: "Code Your Future Application"
             }
         },
-        Source: fromEmail,
+        Source: deal.user_id.email,
     }).promise();
 }
 
