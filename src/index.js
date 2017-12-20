@@ -38,7 +38,7 @@ exports.handler = function (event, context, callback) {
 };
 
 function findRottenDeals() {
-    return fetch(pipedriveBaseUrl + 'deals?limit=10&user_id=' + pipedriveUser + '&stage_id=' + pipedriveStage + '&status=open&start=0&api_token=' + pipedriveKey)
+    return fetch(pipedriveBaseUrl + 'deals?&user_id=' + pipedriveUser + '&stage_id=' + pipedriveStage + '&status=open&start=0&api_token=' + pipedriveKey)
         .then(function (value) {
             return value.json()
         })
