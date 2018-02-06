@@ -1,6 +1,6 @@
 Hi, {{firstName}},
 
-How is your Code Your Future application letter coming along?
+How is your Code Your Future application coming along?
 
 We understand that you may have other commitments and may not have time to complete your application at this time.
 If there is anything we can do to help you with your application please respond to this email or get in touch with the community on https://gitter.im/CodeYourFuture-all/Applicants

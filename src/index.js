@@ -6,7 +6,7 @@ const Handlebars = require('handlebars');
 
 const pipedriveKey = process.env.PIPEDRIVE_KEY;
 const pipedriveBaseUrl = 'https://api.pipedrive.com/v1/';
-const pipedriveStage = '20';
+const pipedriveStages = '20,19,6'.split(',');
 const pipedriveUser = '2643534';
 
 const emailHtmlTemplate = Handlebars.compile(fs.readFileSync('src/email.html', 'utf8'));
@@ -22,7 +22,15 @@ const sns = new AWS.SNS();
 const ses = new AWS.SES();
 
 exports.handler = function (event, context, callback) {
-    findRottenDeals()
+
+    Promise.all(pipedriveStages.map(processStage))
+        .then(function () {
+            callback(null, null)
+        }).catch(callback)
+};
+
+function processStage(stage) {
+    return findRottenDeals(stage)
         .then(function (deals) {
             const promises = deals.map(function (deal) {
                 processDeal(deal);
@@ -31,13 +39,10 @@ exports.handler = function (event, context, callback) {
             console.log(deals.length + ' rotten deals');
             return Promise.all(promises);
         })
-        .then(function () {
-            callback(null, null)
-        }).catch(callback)
-};
+}
 
-function findRottenDeals() {
-    return fetch(pipedriveBaseUrl + 'deals?&user_id=' + pipedriveUser + '&stage_id=' + pipedriveStage + '&status=open&start=0&api_token=' + pipedriveKey)
+function findRottenDeals(pipedriveStage) {
+    return fetch(pipedriveBaseUrl + 'deals?&user_id=' + pipedriveUser + '&stage_id=' + pipedriveStage + '&status=open&start=0&api_token=' + pipedriveKey + '&limit=2')
         .then(function (value) {
             return value.json()
         })
@@ -71,12 +76,13 @@ function processDeal(deal) {
         .then(function () {
             return markDealLost(deal);
         })
+        .catch(function (error) {
+            console.error('error with deal ' + deal.id, error);
+        })
         .then(function () {
             console.log(deal.id + ' processed')
-        })
-        .catch(function (error) {
-            console.error('error with deal ' + deal, error);
         });
+
 }
 
 function sendEmail(deal) {
